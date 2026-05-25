@@ -1,12 +1,18 @@
 import speech_recognition as sr
 
-action_on = ["চালু", "অন", "শুরু", "ঘোরাও"]
-action_off = ["বন্ধ", "অফ"]
+action_on = ["চালু", "অন", "শুরু", 
+             "ঘোরাও","জ্বালাও","জ্বালাবে","জ্বালিয়ে",
+             "চালু", "চালিয়ে", "চালাবে", "চালাও"]
+
+action_off = ["বন্ধ", "অফ",
+            "বন্ধ করো", "বন্ধ করে দাও",
+            "থামাও", "নিভাও"]
 
 devices = {
     "motor": ["মোটর"],
-    "fan": ["পাখা", "ফ্যান"],
-    "light": ["আলো", "লাইট"]
+    "fan": ["পাখা", "ফ্যান", "ফ্যানটা","প্যান", "প্যানটা",
+        "গ্যান", "পান"],
+    "light": ["আলো", "লাইট", "বাতি", "লাইটটা"]
 }
 
 def understand(text):
@@ -24,10 +30,9 @@ def understand(text):
             break
 
     for dev, words in devices.items():
-        for w in words:
-            if w in text:
-                device = dev
-                break
+        if any(w in text for w in words):
+            device = dev
+            break
 
     if action and device:
         print(f"Device: {device.capitalize()} -> Turned {action.upper()}")
